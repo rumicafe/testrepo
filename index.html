@@ -119,4 +119,193 @@
       display:flex;
       gap:10px;
       justify-content:center;
-      flex
+      flex-wrap:wrap;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:11px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      color:var(--text);
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      font-weight:650;
+      font-size:13px;
+      user-select:none;
+    }
+    .chip:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(243,199,122,0.35);
+    }
+
+    .bigBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:min(420px, 100%);
+      padding:16px 18px;
+      border-radius:16px;
+      border:1px solid rgba(243,199,122,0.55);
+      background: linear-gradient(180deg, var(--gold), var(--gold2));
+      color:#2a0b3a;
+      text-decoration:none;
+      font-weight:800;
+      font-size:16px;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.25);
+      transition: transform .18s ease, filter .18s ease;
+    }
+    .bigBtn:hover{ transform: translateY(-2px); filter: brightness(1.03); }
+
+    /* MENU SECTION (hidden -> revealed with transition) */
+    .menuSection{
+      margin-top:18px;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      padding:14px;
+    }
+
+    /* hidden state */
+    .menuHidden{
+      display:none;
+      opacity:0;
+      transform: translateY(14px);
+    }
+
+    /* visible with animation */
+    .menuShow{
+      display:block;
+      animation: menuIn 520ms ease forwards;
+    }
+    @keyframes menuIn{
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    .menuTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:8px 6px 12px;
+    }
+    .menuTitle{
+      margin:0;
+      font-size:16px;
+      font-weight:800;
+      color:rgba(255,255,255,0.92);
+    }
+    .backBtn{
+      text-decoration:none;
+      font-weight:700;
+      color:var(--text);
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      padding:10px 12px;
+      border-radius:12px;
+      transition: transform .18s ease, background .18s ease;
+      user-select:none;
+    }
+    .backBtn:hover{ transform: translateY(-2px); background: rgba(255,255,255,0.10); }
+
+    .menuImg{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.34);
+      margin:12px 0;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .footer{
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    @media (max-width:520px){
+      .brand{font-size:26px}
+      .logoWrap{width:84px;height:84px;border-radius:20px}
+      .menuTop{flex-direction:column; align-items:flex-start}
+      .backBtn{width:100%; text-align:center}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sparkle"></div>
+
+  <main class="page" id="page">
+    <div class="container">
+
+      <!-- FRONT COVER -->
+      <section class="cover" id="top">
+        <div class="logoWrap">
+          <!-- Upload your logo as logo.png in same repo -->
+          <img src="./logo.png" alt="Rumi Café Logo" onerror="this.style.display='none'">
+        </div>
+
+        <h1 class="brand">Rumi Café</h1>
+        <p class="tagline">Menu • Location • Instagram</p>
+
+        <div class="socialRow">
+          <a class="chip" href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 Google Location</a>
+          <a class="chip" href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Instagram</a>
+        </div>
+
+        <a class="bigBtn" href="#menu" id="openMenuBtn">🍔 Open Menu</a>
+      </section>
+
+      <!-- MENU -->
+      <section class="menuSection menuHidden" id="menu">
+        <div class="menuTop">
+          <h2 class="menuTitle">Rumi Café Menu</h2>
+          <a class="backBtn" href="#top" id="backBtn">⬆ Back</a>
+        </div>
+
+        <img class="menuImg" src="./1.png" alt="Menu page 1">
+        <img class="menuImg" src="./2.png" alt="Menu page 2">
+      </section>
+
+      <div class="footer">© <span id="y"></span> Rumi Café</div>
+
+    </div>
+  </main>
+
+  <script>
+    // Page fade-in on load
+    window.addEventListener("load", () => {
+      document.getElementById("page").classList.add("loaded");
+      document.getElementById("y").textContent = new Date().getFullYear();
+    });
+
+    // Open Menu with transition
+    const openBtn = document.getElementById("openMenuBtn");
+    const menuSection = document.getElementById("menu");
+    const backBtn = document.getElementById("backBtn");
+
+    openBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      menuSection.classList.remove("menuHidden");
+      menuSection.classList.add("menuShow");
+      menuSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    // Back to top
+    backBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  </script>
+</body>
+</html>
+
