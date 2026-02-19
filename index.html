@@ -1,311 +1,169 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rumi Café Menu</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rumi Café Menu</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg1:#17031f;
-      --bg2:#2a0b3a;
-      --glass:rgba(255,255,255,0.08);
-      --line:rgba(255,255,255,0.14);
-      --text:rgba(255,255,255,0.92);
-      --muted:rgba(255,255,255,0.68);
-      --gold:#f3c77a;
-      --gold2:#e0b96c;
-      --shadow:0 18px 55px rgba(0,0,0,0.38);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Poppins, Arial, Helvetica, sans-serif;
-      color:var(--text);
-      min-height:100vh;
-      background:
-        radial-gradient(1200px 650px at 15% 10%, rgba(126,39,190,0.35), transparent 60%),
-        radial-gradient(950px 650px at 85% 25%, rgba(42,11,58,0.65), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      overflow-x:hidden;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Poppins, sans-serif;
+  background:linear-gradient(180deg,#17031f,#2a0b3a);
+  color:white;
+  text-align:center;
+}
 
-    /* subtle floating particles */
-    .sparkle{
-      position:fixed; inset:-240px;
-      pointer-events:none;
-      opacity:.55;
-      background-image:
-        radial-gradient(circle at 20% 30%, rgba(243,199,122,0.12) 0 2px, transparent 2px),
-        radial-gradient(circle at 75% 20%, rgba(255,255,255,0.09) 0 1px, transparent 1px),
-        radial-gradient(circle at 55% 75%, rgba(243,199,122,0.10) 0 2px, transparent 2px);
-      background-size: 240px 240px, 180px 180px, 280px 280px;
-      animation: drift 18s linear infinite;
-    }
-    @keyframes drift{
-      from{transform:translate3d(0,0,0)}
-      to{transform:translate3d(-70px,45px,0)}
-    }
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
+}
 
-    .container{
-      width:min(980px, calc(100% - 26px));
-      margin:0 auto;
-      padding:26px 0 70px;
-    }
+.cover{
+  background:rgba(255,255,255,0.06);
+  border-radius:25px;
+  padding:40px 20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
+}
 
-    /* Page fade-in */
-    .page{
-      opacity:0;
-      transform: translateY(12px);
-      transition: opacity 700ms ease, transform 700ms ease;
-    }
-    .page.loaded{
-      opacity:1;
-      transform: translateY(0);
-    }
+.logo{
+  width:110px;
+  height:110px;
+  border-radius:20px;
+  overflow:hidden;
+  margin:auto;
+  margin-bottom:15px;
+}
 
-    /* FRONT COVER */
-    .cover{
-      margin-top:14px;
-      border-radius:22px;
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-      padding:26px 18px 22px;
-      text-align:center;
-    }
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-    .logoWrap{
-      width:92px;
-      height:92px;
-      border-radius:22px;
-      margin:0 auto 14px;
-      border:1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.06);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      box-shadow: 0 14px 35px rgba(0,0,0,0.28);
-    }
-    .logoWrap img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
+.dervish{
+  width:160px;
+  margin:20px auto;
+  opacity:0.9;
+  animation:float 4s ease-in-out infinite;
+}
 
-    .brand{
-      margin:0;
-      font-size:32px;
-      font-weight:800;
-      color:var(--gold);
-      letter-spacing:0.2px;
-    }
-    .tagline{
-      margin:8px 0 0;
-      font-size:13px;
-      color:var(--muted);
-    }
+@keyframes float{
+  0%,100%{transform:translateY(0px);}
+  50%{transform:translateY(-10px);}
+}
 
-    .socialRow{
-      margin:18px 0 18px;
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      flex-wrap:wrap;
-    }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:11px 14px;
-      border-radius:999px;
-      text-decoration:none;
-      color:var(--text);
-      border:1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
-      font-weight:650;
-      font-size:13px;
-      user-select:none;
-    }
-    .chip:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(243,199,122,0.35);
-    }
+h1{
+  color:#f3c77a;
+  margin:10px 0 5px;
+  font-size:32px;
+}
 
-    .bigBtn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      width:min(420px, 100%);
-      padding:16px 18px;
-      border-radius:16px;
-      border:1px solid rgba(243,199,122,0.55);
-      background: linear-gradient(180deg, var(--gold), var(--gold2));
-      color:#2a0b3a;
-      text-decoration:none;
-      font-weight:800;
-      font-size:16px;
-      box-shadow: 0 14px 35px rgba(0,0,0,0.25);
-      transition: transform .18s ease, filter .18s ease;
-    }
-    .bigBtn:hover{ transform: translateY(-2px); filter: brightness(1.03); }
+.tagline{
+  color:rgba(255,255,255,0.7);
+  font-size:14px;
+}
 
-    /* MENU SECTION (hidden -> revealed with transition) */
-    .menuSection{
-      margin-top:18px;
-      border-radius:22px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,0.06);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-      padding:14px;
-    }
+.social{
+  margin:25px 0;
+}
 
-    /* hidden state */
-    .menuHidden{
-      display:none;
-      opacity:0;
-      transform: translateY(14px);
-    }
+.social a{
+  display:inline-block;
+  margin:8px;
+  padding:12px 18px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:600;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.2);
+  color:white;
+  transition:0.3s;
+}
 
-    /* visible with animation */
-    .menuShow{
-      display:block;
-      animation: menuIn 520ms ease forwards;
-    }
-    @keyframes menuIn{
-      to{ opacity:1; transform: translateY(0); }
-    }
+.social a:hover{
+  transform:translateY(-3px);
+  background:rgba(255,255,255,0.15);
+}
 
-    .menuTop{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      padding:8px 6px 12px;
-    }
-    .menuTitle{
-      margin:0;
-      font-size:16px;
-      font-weight:800;
-      color:rgba(255,255,255,0.92);
-    }
-    .backBtn{
-      text-decoration:none;
-      font-weight:700;
-      color:var(--text);
-      border:1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      padding:10px 12px;
-      border-radius:12px;
-      transition: transform .18s ease, background .18s ease;
-      user-select:none;
-    }
-    .backBtn:hover{ transform: translateY(-2px); background: rgba(255,255,255,0.10); }
+.openBtn{
+  display:inline-block;
+  margin-top:10px;
+  padding:16px 30px;
+  border-radius:15px;
+  background:linear-gradient(180deg,#f3c77a,#e0b96c);
+  color:#2a0b3a;
+  font-weight:700;
+  text-decoration:none;
+  transition:0.3s;
+}
 
-    .menuImg{
-      width:100%;
-      height:auto;
-      display:block;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 18px 45px rgba(0,0,0,0.34);
-      margin:12px 0;
-      background: rgba(255,255,255,0.03);
-    }
+.openBtn:hover{
+  transform:translateY(-3px);
+}
 
-    .footer{
-      margin-top:18px;
-      text-align:center;
-      color:var(--muted);
-      font-size:12px;
-    }
+.menu{
+  display:none;
+  margin-top:30px;
+  animation:fadeIn 0.6s ease forwards;
+}
 
-    @media (max-width:520px){
-      .brand{font-size:26px}
-      .logoWrap{width:84px;height:84px;border-radius:20px}
-      .menuTop{flex-direction:column; align-items:flex-start}
-      .backBtn{width:100%; text-align:center}
-    }
-  </style>
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.menu img{
+  width:100%;
+  border-radius:20px;
+  margin:15px 0;
+}
+
+</style>
 </head>
 
 <body>
-  <div class="sparkle"></div>
 
-  <main class="page" id="page">
-    <div class="container">
+<div class="container">
 
-      <!-- FRONT COVER -->
-      <section class="cover" id="top">
-        <div class="logoWrap">
-          <!-- Upload your logo as logo.png in same repo -->
-          <img src="./logo.png" alt="Rumi Café Logo" onerror="this.style.display='none'">
-        </div>
-
-        <h1 class="brand">Rumi Café</h1>
-        <p class="tagline">Menu • Location • Instagram</p>
-
-        <div class="socialRow">
-          <a class="chip" href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 Google Location</a>
-          <a class="chip" href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Instagram</a>
-        </div>
-
-        <a class="bigBtn" href="#menu" id="openMenuBtn">🍔 Open Menu</a>
-      </section>
-
-      <!-- MENU -->
-      <section class="menuSection menuHidden" id="menu">
-        <div class="menuTop">
-          <h2 class="menuTitle">Rumi Café Menu</h2>
-          <a class="backBtn" href="#top" id="backBtn">⬆ Back</a>
-        </div>
-
-        <img class="menuImg" src="./1.png" alt="Menu page 1">
-        <img class="menuImg" src="./2.png" alt="Menu page 2">
-      </section>
-
-      <div class="footer">© <span id="y"></span> Rumi Café</div>
-
+  <div class="cover">
+    
+    <div class="logo">
+      <img src="logo.jpeg" alt="Logo">
     </div>
-  </main>
 
-  <script>
-    // Page fade-in on load
-    window.addEventListener("load", () => {
-      document.getElementById("page").classList.add("loaded");
-      document.getElementById("y").textContent = new Date().getFullYear();
-    });
+    <img src="dervish.png" class="dervish" alt="Rumi Dervish">
 
-    // Open Menu with transition
-    const openBtn = document.getElementById("openMenuBtn");
-    const menuSection = document.getElementById("menu");
-    const backBtn = document.getElementById("backBtn");
+    <h1>Rumi Café</h1>
+    <p class="tagline">Where flavor meets tradition</p>
 
-    openBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      menuSection.classList.remove("menuHidden");
-      menuSection.classList.add("menuShow");
-      menuSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    <div class="social">
+      <a href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 Location</a>
+      <a href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Instagram</a>
+    </div>
 
-    // Back to top
-    backBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  </script>
+    <a href="#" class="openBtn" onclick="openMenu()">🍔 Open Menu</a>
+
+  </div>
+
+  <div class="menu" id="menu">
+    <img src="1.png">
+    <img src="2.png">
+  </div>
+
+</div>
+
+<script>
+function openMenu(){
+  document.getElementById("menu").style.display="block";
+  document.getElementById("menu").scrollIntoView({behavior:"smooth"});
+}
+</script>
+
 </body>
 </html>
-
