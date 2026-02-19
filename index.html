@@ -1,167 +1,131 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Rumi Café Menu</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rumi Café</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
   font-family:Poppins, sans-serif;
-  background:linear-gradient(180deg,#17031f,#2a0b3a);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:
+    radial-gradient(circle at 20% 20%, #4b1672 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, #2a0b3a 0%, transparent 40%),
+    linear-gradient(180deg,#17031f,#2a0b3a);
   color:white;
   text-align:center;
-}
-
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:40px 20px;
-}
-
-.cover{
-  background:rgba(255,255,255,0.06);
-  border-radius:25px;
-  padding:40px 20px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.4);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,0.1);
-}
-
-.logo{
-  width:110px;
-  height:110px;
-  border-radius:20px;
   overflow:hidden;
-  margin:auto;
-  margin-bottom:15px;
 }
 
-.logo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+/* Glass Card */
+.card{
+  width:90%;
+  max-width:500px;
+  padding:50px 30px;
+  border-radius:25px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 25px 60px rgba(0,0,0,0.45);
 }
 
+/* Dervish Image */
 .dervish{
-  width:160px;
-  margin:20px auto;
+  width:140px;
+  margin:auto;
+  margin-bottom:25px;
   opacity:0.9;
-  animation:float 4s ease-in-out infinite;
+  animation:rotate 18s linear infinite;
 }
 
-@keyframes float{
-  0%,100%{transform:translateY(0px);}
-  50%{transform:translateY(-10px);}
+@keyframes rotate{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
 }
 
 h1{
+  margin:0;
+  font-size:34px;
+  font-weight:800;
   color:#f3c77a;
-  margin:10px 0 5px;
-  font-size:32px;
 }
 
 .tagline{
-  color:rgba(255,255,255,0.7);
+  margin-top:8px;
+  color:rgba(255,255,255,0.65);
   font-size:14px;
 }
 
-.social{
-  margin:25px 0;
+.buttons{
+  margin-top:35px;
 }
 
-.social a{
-  display:inline-block;
-  margin:8px;
-  padding:12px 18px;
+.buttons a{
+  display:block;
+  margin:12px auto;
+  padding:14px 20px;
+  width:80%;
   border-radius:50px;
   text-decoration:none;
   font-weight:600;
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.07);
   color:white;
   transition:0.3s;
 }
 
-.social a:hover{
-  transform:translateY(-3px);
+.buttons a:hover{
   background:rgba(255,255,255,0.15);
+  transform:translateY(-3px);
 }
 
-.openBtn{
-  display:inline-block;
-  margin-top:10px;
-  padding:16px 30px;
+.open{
+  margin-top:25px;
+  padding:16px 25px;
+  width:85%;
   border-radius:15px;
   background:linear-gradient(180deg,#f3c77a,#e0b96c);
   color:#2a0b3a;
   font-weight:700;
   text-decoration:none;
+  display:inline-block;
   transition:0.3s;
 }
 
-.openBtn:hover{
+.open:hover{
   transform:translateY(-3px);
 }
-
-.menu{
-  display:none;
-  margin-top:30px;
-  animation:fadeIn 0.6s ease forwards;
-}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-.menu img{
-  width:100%;
-  border-radius:20px;
-  margin:15px 0;
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="card">
 
-  <div class="cover">
-    
-    <div class="logo">
-      <img src="logo.jpeg" alt="Logo">
-    </div>
+  <img src="dervish.png" class="dervish" alt="Rumi">
 
-    <img src="dervish.png" class="dervish" alt="Rumi Dervish">
+  <h1>Rumi Café</h1>
+  <div class="tagline">Where flavor meets tradition</div>
 
-    <h1>Rumi Café</h1>
-    <p class="tagline">Where flavor meets tradition</p>
-
-    <div class="social">
-      <a href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 Location</a>
-      <a href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Instagram</a>
-    </div>
-
-    <a href="#" class="openBtn" onclick="openMenu()">🍔 Open Menu</a>
-
+  <div class="buttons">
+    <a href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 View Location</a>
+    <a href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Follow on Instagram</a>
   </div>
 
-  <div class="menu" id="menu">
-    <img src="1.png">
-    <img src="2.png">
-  </div>
+  <a href="#" class="open" onclick="openMenu()">🍔 Open Menu</a>
 
 </div>
 
 <script>
 function openMenu(){
-  document.getElementById("menu").style.display="block";
-  document.getElementById("menu").scrollIntoView({behavior:"smooth"});
+  window.location.href="#menu";
 }
 </script>
 
