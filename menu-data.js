@@ -1,234 +1,82 @@
 const MENU = {
-  title: "Rumi Cafe Menu",
   sections: [
-
     {
       title: "Beef Burgers",
       items: [
-        {
-          name: "Rumi Classic",
-          desc: "Juicy single smashed beef patty in a toasted royal bun topped with melted cheese, house signature sauce and pickles.",
-          price: "1.8",
-          // img: "images/rumi-classic.jpg"
-        },
-        {
-          name: "Bull Mushroom",
-          desc: "Double beef patties layered with caramelized onions, two cheese slices and signature Rumi mushroom sauce.",
-          price: "2.2",
-          // img: "images/bull-mushroom.jpg"
-        },
-        {
-          name: "Last Dance",
-          desc: "Triple smashed beef patties stacked with melted cheese, pickles and our very own sauce in a toasted country bun.",
-          price: "2.6",
-          // img: "images/last-dance.jpg"
-        },
+        { name: "Rumi Classic", desc: "Juicy single smashed beef patty in a toasted royal bun topped on melted cheese in house signature sauce and pickles", price: "1.8" },
+        { name: "Bull Mushroom", desc: "Double beef patties layered with caramelized onions two cheese slice with signature Rumi mushroom sauce", price: "2.2" },
+        { name: "Last Dance", desc: "Triple smashed beef patties steaked combination with melted cheese pickles our very own sauce in a toasted country bun", price: "2.6" },
       ],
     },
-
     {
       title: "Chicken Burgers",
       items: [
-        {
-          name: "Grilled Pro",
-          desc: "Tender grilled chicken fillet seasoned with café spices topped with cheese, iceberg, tomatoes, onions and pickles.",
-          price: "1.6",
-          // img: "images/grilled-pro.jpg"
-        },
-        {
-          name: "Smoked Mushroom",
-          desc: "Grilled chicken fillet with yellow cheese and rich Italian mushroom sauce in a toasted bun.",
-          price: "1.8",
-          // img: "images/smoked-mushroom.jpg"
-        },
-        {
-          name: "Crispy Zinger",
-          desc: "Crispy fried chicken fillet with crunchy herbs topped with cheese and our signature sauce.",
-          price: "1.4",
-          // img: "images/crispy-zinger.jpg"
-        },
+        { name: "Grilled Pro", desc: "Tender grilled chicken fillet seasoned with café spices topped with cheese iceberg tomatos onions and pickles", price: "1.6" },
+        { name: "Smoked Mushroom", desc: "Grilled chicken fillet with yellow cheese and rich Italian mushroom sauce in a toss bun", price: "1.8" },
+        { name: "Crispy Zinger", desc: "Crispy fried chicken fillet juicy & crunchy herbs topped with cheese and our signature sauce", price: "1.4" },
       ],
     },
-
     {
       title: "Pasta",
       items: [
-        {
-          name: "Alfredo Pasta",
-          desc: "Creamy, rich and silky smooth pasta cooked in parmesan garlic sauce.",
-          price: "2",
-          // img: "images/alfredo-pasta.jpg"
-        },
+        { name: "Alfredo Pasta", desc: "Creamy rich and silky smooth parmesan garlic sauce topnotch blast", price: "2" },
       ],
     },
-
     {
       title: "Snacks",
       items: [
-        {
-          name: "Loaded Fries",
-          desc: "Golden crispy fries topped with crispy chicken bites, signature Rumi sauces and jalapeños.",
-          price: "1.8",
-          // img: "images/loaded-fries.jpg"
-        },
-        {
-          name: "Cheese Chilli Balls (6pcs)",
-          desc: "A bite of heaven — crispy outside with a cheesy center.",
-          price: "1.2",
-          // img: "images/cheese-chilli-balls.jpg"
-        },
-        {
-          name: "Hash Brown",
-          desc: "Crispy fried potato hash brown with a classic french taste.",
-          price: "1.3",
-          // img: "images/hash-brown.jpg"
-        },
-        {
-          name: "Sandos Sandwich",
-          desc: "Freshly prepared signature café sandwich with scrambled egg, cheese sauce and extra chicken bites.",
-          price: "1.2",
-          // img: "images/sandos-sandwich.jpg"
-        },
+        { name: "Loaded Fries", desc: "Golden crispy fries topped with crispy chicken bites drizzling with rumis topped sauces and jalapenos", price: "1.8" },
+        { name: "Cheese chilli Balls 6pcs", desc: "A bite of some heaven in a cheese and float on a wave of crumbs", price: "1.2" },
+        { name: "Hash Brown", desc: "Crispy fried potato hash brown perfectly french taste", price: "1.3" },
+        { name: "Sandos Sandwich", desc: "Freshly prepared signature café sandwich filling with scrambeld egg and cheese sauce with extra chicken bites", price: "1.2" },
       ],
     },
-
     {
       title: "Wraps",
       items: [
-        {
-          name: "Turkish Wrap",
-          desc: "Light but filling — juicy chicken, pickles, fries and fresh toppings. Choice of tortilla, khubs or porotta.",
-          price: "1.2",
-          // img: "images/turkish-wrap.jpg"
-        },
-        {
-          name: "Octa Beef Wrap",
-          desc: "Flavorful beef wrap with fresh vegetables, fries and sauces. Choice of tortilla, khubs or porotta.",
-          price: "1.4",
-          // img: "images/octa-beef-wrap.jpg"
-        },
+        { name: "Turkish Wrap", desc: "Light but worthy filled with juicy chicken, pickle, fries and fresh toppings choice of tortilla khubs or porotha", price: "1.2" },
+        { name: "Octa Beef Wrap", desc: "Flavorful beef wrap with fresh vegetables fries and sauces choice of tortilla khubs or porotha", price: "1.4" },
       ],
     },
-
     {
       title: "Fresh Juices",
       items: [
-        {
-          name: "Orange Juice",
-          desc: "Freshly squeezed natural pulpy orange juice.",
-          price: "0.8",
-          // img: "images/orange-juice.jpg"
-        },
-        {
-          name: "Mr Mango",
-          desc: "Thick and refreshing mango juice.",
-          price: "0.8",
-          // img: "images/mr-mango.jpg"
-        },
+        { name: "Orange Juice", desc: "Freshly squeezed natural pulpy orange juice", price: "0.8" },
+        { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.8" },
       ],
     },
-
     {
       title: "Shakes",
       items: [
-        {
-          name: "Oreo Shake",
-          desc: "Creamy Oreo milkshake blended to perfection.",
-          price: "1",
-          // img: "images/oreo-shake.jpg"
-        },
-        {
-          name: "Chocolate Ice Cream Shake",
-          desc: "Rich chocolate ice cream blended into a smooth milkshake.",
-          price: "1",
-          // img: "images/chocolate-shake.jpg"
-        },
-        {
-          name: "Avocado Shake",
-          desc: "Smooth creamy avocado shake, naturally refreshing with nuts and honey.",
-          price: "1",
-          // img: "images/avocado-shake.jpg"
-        },
-        {
-          name: "Protein Shake",
-          desc: "High-protein energy shake perfect for a healthy boost.",
-          price: "1",
-          // img: "images/protein-shake.jpg"
-        },
+        { name: "Oreo Shake", desc: "Creamy Oreo milkshake blended to perfection", price: "1" },
+        { name: "Chocolate Ice Cream Shake", desc: "Rich chocolate ice cream blended into a smooth milkshake", price: "1" },
+        { name: "Avocado Shake", desc: "Smooth creamy avocado shake naturally refreshing with nuts and honey", price: "1" },
+        { name: "Protein Shake", desc: "High protein energy shake perfect for a healthy boost", price: "1" },
       ],
     },
-
     {
       title: "Refreshers",
       items: [
-        {
-          name: "Blueberry Fusion",
-          desc: "Refreshing blueberry flavored cooler.",
-          price: "0.8",
-          // img: "images/blueberry-fusion.jpg"
-        },
-        {
-          name: "Passion Point",
-          desc: "Tropical passion fruit refresher.",
-          price: "0.8",
-          // img: "images/passion-point.jpg"
-        },
-        {
-          name: "Mint Margarita",
-          desc: "Chilled mint lemon margarita cooler.",
-          price: "0.8",
-          // img: "images/mint-margarita.jpg"
-        },
-        {
-          name: "Fresh Lime",
-          desc: "Classic fresh lime refreshment.",
-          price: "0.6",
-          // img: "images/fresh-lime.jpg"
-        },
+        { name: "Blueberry fusion", desc: "Refreshing blueberry flavored cooler", price: "0.8" },
+        { name: "Passion Point", desc: "Tropical passion fruit refresher", price: "0.8" },
+        { name: "Mint Margarita", desc: "Chilled mint lemon margarita cooler", price: "0.8" },
+        { name: "Fresh Lime", desc: "Classic fresh lime refreshment", price: "0.6" },
       ],
     },
-
     {
       title: "Paratha",
       items: [
-        {
-          name: "Old School Paratha",
-          desc: "Traditional crispy layered paratha.",
-          price: "0.2",
-          // img: "images/old-school-paratha.jpg"
-        },
-        {
-          name: "Potato Cheese Paratha",
-          desc: "Stuffed paratha filled with potato and melted cheese.",
-          price: "0.5",
-          // img: "images/potato-cheese-paratha.jpg"
-        },
-        {
-          name: "Egg Cheese Paratha",
-          desc: "Fresh paratha stuffed with seasoned egg filling.",
-          price: "0.6",
-          // img: "images/egg-cheese-paratha.jpg"
-        },
-        {
-          name: "Honey Cheese Paratha",
-          desc: "Sweet paratha filled with honey and melted cheese.",
-          price: "0.5",
-          // img: "images/honey-cheese-paratha.jpg"
-        },
+        { name: "Old School Paratha", desc: "Traditional crispy layered paratha", price: "0.2" },
+        { name: "Potato Cheese Paratha", desc: "Stuffed paratha filled with potato and melted cheese", price: "0.5" },
+        { name: "Egg Cheese Paratha", desc: "Fresh paratha stuffed with seasoned egg filling", price: "0.6" },
+        { name: "Honey Cheese Paratha", desc: "Sweet paratha filled with honey and melted cheese", price: "0.5" },
       ],
     },
-
     {
-      title: "Desserts",
+      title: "Dessert",
       items: [
-        {
-          name: "Skillet Brownies",
-          desc: "In-house baked brownies with a warm & cool combination.",
-          price: "1",
-          // img: "images/skillet-brownies.jpg"
-        },
+        { name: "Skillet Brownies", desc: "Indulge with pure chocolate aroma with very own in house baked brownies come with warm & cool stuff", price: "1" },
       ],
     },
-
   ],
 };
