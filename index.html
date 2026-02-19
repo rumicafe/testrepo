@@ -8,126 +8,362 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --bg1:#17031f;
+  --bg2:#2a0b3a;
+  --gold:#f3c77a;
+  --gold2:#e0b96c;
+  --text:rgba(255,255,255,0.92);
+  --muted:rgba(255,255,255,0.68);
+  --glass:rgba(255,255,255,0.06);
+  --line:rgba(255,255,255,0.12);
+  --shadow:0 25px 70px rgba(0,0,0,0.48);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   margin:0;
   font-family:Poppins, sans-serif;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   background:
-    radial-gradient(circle at 20% 20%, #4b1672 0%, transparent 40%),
-    radial-gradient(circle at 80% 30%, #2a0b3a 0%, transparent 40%),
-    linear-gradient(180deg,#17031f,#2a0b3a);
-  color:white;
+    radial-gradient(circle at 18% 18%, rgba(126,39,190,0.42), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(42,11,58,0.82), transparent 45%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ===== Subtle Particle Effect ===== */
+.particles{
+  position:fixed;
+  inset:-200px;
+  pointer-events:none;
+  opacity:.55;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(243,199,122,0.12) 0 2px, transparent 2px),
+    radial-gradient(circle at 70% 40%, rgba(255,255,255,0.10) 0 1px, transparent 1px),
+    radial-gradient(circle at 55% 78%, rgba(243,199,122,0.10) 0 2px, transparent 2px);
+  background-size: 240px 240px, 180px 180px, 280px 280px;
+  animation: drift 18s linear infinite;
+}
+@keyframes drift{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-70px,45px,0)}
+}
+
+/* ===== Loading Screen ===== */
+.loaderWrap{
+  position:fixed; inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(18,4,26,0.92);
+  z-index:9999;
+  transition: opacity .45s ease, visibility .45s ease;
+}
+.loaderWrap.hide{
+  opacity:0;
+  visibility:hidden;
+}
+.loader{
+  width:56px;
+  height:56px;
+  border-radius:999px;
+  border:4px solid rgba(255,255,255,0.14);
+  border-top-color: var(--gold);
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== Layout ===== */
+.container{
+  width:min(980px, calc(100% - 26px));
+  margin:0 auto;
+  padding:34px 0 70px;
+}
+
+/* Page fade-in */
+.page{
+  opacity:0;
+  transform: translateY(10px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+.page.loaded{
+  opacity:1;
+  transform: translateY(0);
+}
+
+/* ===== Premium Card ===== */
+.card{
+  width:min(520px, 100%);
+  margin:0 auto;
+  padding:52px 30px 34px;
+  border-radius:26px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.05));
+  backdrop-filter: blur(18px);
+  border:1px solid var(--line);
+  box-shadow: var(--shadow);
   text-align:center;
+  position:relative;
   overflow:hidden;
 }
 
-/* Glass Card */
-.card{
-  width:90%;
-  max-width:500px;
-  padding:50px 30px;
-  border-radius:25px;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(18px);
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 25px 60px rgba(0,0,0,0.45);
+/* ===== Animated Golden Glow ===== */
+.glow{
+  position:absolute;
+  inset:-120px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(243,199,122,0.20), transparent 45%),
+    radial-gradient(circle at 70% 80%, rgba(243,199,122,0.15), transparent 50%);
+  filter: blur(22px);
+  animation: glowPulse 4.2s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes glowPulse{
+  0%,100%{opacity:.55; transform:scale(1)}
+  50%{opacity:.9; transform:scale(1.06)}
 }
 
-/* Dervish Image */
 .dervish{
   width:140px;
-  margin:auto;
-  margin-bottom:25px;
-  opacity:0.9;
-  animation:rotate 18s linear infinite;
+  margin:0 auto 22px;
+  opacity:0.92;
+  animation: rotate 18s linear infinite;
+  position:relative;
+  z-index:1;
 }
-
 @keyframes rotate{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
 }
 
 h1{
   margin:0;
   font-size:34px;
   font-weight:800;
-  color:#f3c77a;
+  color:var(--gold);
+  letter-spacing:0.2px;
+  position:relative;
+  z-index:1;
 }
-
 .tagline{
-  margin-top:8px;
-  color:rgba(255,255,255,0.65);
+  margin-top:10px;
+  color:var(--muted);
   font-size:14px;
+  position:relative;
+  z-index:1;
 }
 
-.buttons{
-  margin-top:35px;
+/* Buttons */
+.actions{
+  margin-top:28px;
+  display:grid;
+  gap:12px;
+  position:relative;
+  z-index:1;
 }
-
-.buttons a{
-  display:block;
-  margin:12px auto;
-  padding:14px 20px;
-  width:80%;
-  border-radius:50px;
+.btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:14px 18px;
+  border-radius:999px;
   text-decoration:none;
-  font-weight:600;
-  border:1px solid rgba(255,255,255,0.15);
-  background:rgba(255,255,255,0.07);
-  color:white;
-  transition:0.3s;
-}
-
-.buttons a:hover{
-  background:rgba(255,255,255,0.15);
-  transform:translateY(-3px);
-}
-
-.open{
-  margin-top:25px;
-  padding:16px 25px;
-  width:85%;
-  border-radius:15px;
-  background:linear-gradient(180deg,#f3c77a,#e0b96c);
-  color:#2a0b3a;
   font-weight:700;
-  text-decoration:none;
-  display:inline-block;
-  transition:0.3s;
+  border:1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.07);
+  color:var(--text);
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.btn:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(243,199,122,0.35);
 }
 
-.open:hover{
-  transform:translateY(-3px);
+.btnGold{
+  border-radius:16px;
+  padding:16px 18px;
+  background: linear-gradient(180deg, var(--gold), var(--gold2));
+  color:#2a0b3a;
+  border-color: rgba(243,199,122,0.55);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.25);
+}
+.btnGold:hover{ filter:brightness(1.03); }
+
+.smallNote{
+  margin-top:14px;
+  font-size:12px;
+  color:rgba(255,255,255,0.60);
+}
+
+/* ===== Menu Section with Fade Transition ===== */
+.menuWrap{
+  margin:22px auto 0;
+  width:min(900px,100%);
+  display:none;
+  opacity:0;
+  transform: translateY(18px);
+}
+.menuWrap.show{
+  display:block;
+  animation: menuIn .6s ease forwards;
+}
+@keyframes menuIn{
+  to{ opacity:1; transform: translateY(0); }
+}
+
+.menuCard{
+  margin-top:18px;
+  border-radius:22px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,0.06);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  padding:14px;
+}
+
+.menuTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:6px 6px 12px;
+}
+.menuTitle{
+  margin:0;
+  font-size:16px;
+  font-weight:800;
+}
+.backBtn{
+  text-decoration:none;
+  color:var(--text);
+  font-weight:700;
+  border:1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  padding:10px 12px;
+  border-radius:12px;
+  transition:transform .18s ease, background .18s ease;
+}
+.backBtn:hover{ transform: translateY(-2px); background: rgba(255,255,255,0.12); }
+
+.menuImg{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.34);
+  margin:14px 0;
+  background: rgba(255,255,255,0.03);
+}
+
+/* Sticky WhatsApp button */
+.whatsapp{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:1000;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:999px;
+  background: rgba(37, 211, 102, 0.92);
+  color:white;
+  font-weight:800;
+  border:1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.35);
+  transition: transform .18s ease, filter .18s ease;
+}
+.whatsapp:hover{ transform: translateY(-2px); filter: brightness(1.03); }
+
+@media (max-width:520px){
+  .card{padding:44px 18px 26px}
+  h1{font-size:28px}
+  .dervish{width:128px}
+  .menuTop{flex-direction:column; align-items:flex-start}
+  .backBtn{width:100%; text-align:center}
 }
 </style>
 </head>
 
 <body>
+  <div class="particles"></div>
 
-<div class="card">
-
-  <img src="dervish.png" class="dervish" alt="Rumi">
-
-  <h1>Rumi Café</h1>
-  <div class="tagline">Where flavor meets tradition</div>
-
-  <div class="buttons">
-    <a href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 View Location</a>
-    <a href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Follow on Instagram</a>
+  <!-- Loading overlay -->
+  <div class="loaderWrap" id="loader">
+    <div class="loader"></div>
   </div>
 
-  <a href="#" class="open" onclick="openMenu()">🍔 Open Menu</a>
+  <!-- WhatsApp button (replace number) -->
+  <a class="whatsapp" target="_blank"
+     href="https://wa.me/WHATSAPP_NUMBER_HERE?text=Hello%20Rumi%20Caf%C3%A9%2C%20I%20want%20to%20order%20please.">
+     💬 WhatsApp Order
+  </a>
 
-</div>
+  <main class="page" id="page">
+    <div class="container">
+
+      <!-- Premium cover card -->
+      <section class="card" id="top">
+        <div class="glow"></div>
+
+        <img src="dervish.png" class="dervish" alt="Rumi">
+
+        <h1>Rumi Café</h1>
+        <div class="tagline">Where flavor meets tradition</div>
+
+        <div class="actions">
+          <a class="btn" href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 View Location</a>
+          <a class="btn" href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Follow on Instagram</a>
+
+          <a class="btn btnGold" href="#menu" id="openMenuBtn">🍔 Open Menu</a>
+        </div>
+
+        <div class="smallNote">Tip: Tap “Open Menu” to view full menu pages.</div>
+      </section>
+
+      <!-- Menu section -->
+      <div class="menuWrap" id="menuWrap">
+        <section class="menuCard" id="menu">
+          <div class="menuTop">
+            <h2 class="menuTitle">Rumi Café Menu</h2>
+            <a class="backBtn" href="#top" id="backBtn">⬆ Back to Top</a>
+          </div>
+
+          <img class="menuImg" src="1.png" alt="Menu page 1">
+          <img class="menuImg" src="2.png" alt="Menu page 2">
+        </section>
+      </div>
+
+    </div>
+  </main>
 
 <script>
-function openMenu(){
-  window.location.href="#menu";
-}
-</script>
+  // Loading animation (hide when page loaded)
+  window.addEventListener("load", () => {
+    document.getElementById("loader").classList.add("hide");
+    document.getElementById("page").classList.add("loaded");
+  });
 
+  // Smooth fade transition to menu
+  const openBtn = document.getElementById("openMenuBtn");
+  const menuWrap = document.getElementById("menuWrap");
+  const backBtn = document.getElementById("backBtn");
+
+  openBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    menuWrap.classList.add("show");
+    document.getElementById("menu").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  backBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("top").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+</script>
 </body>
 </html>
