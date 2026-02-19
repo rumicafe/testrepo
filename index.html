@@ -5,31 +5,91 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rumi Cafe Menu</title>
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <main class="menu" id="menuRoot">
+  <main class="menu" id="menuRoot" aria-label="Rumi Cafe Menu">
+
+    <!-- Corner ornaments -->
+    <svg class="corner tl" viewBox="0 0 120 120" aria-hidden="true">
+      <path fill="#d7a94e" d="M12 88c22-6 30-22 34-36 6-22 20-32 36-36 10-2 18 0 24 6 6 6 8 14 6 24-4 16-14 30-36 36-14 4-30 12-36 34H12V88zm20 6c8-18 22-26 38-30 18-5 26-14 30-28 2-8 1-14-3-18-4-4-10-5-18-3-14 4-23 12-28 30-4 16-12 30-30 38h11z"/>
+      <path fill="#d7a94e" d="M22 98c10-4 18-10 24-18 6-8 8-18 6-28 10 0 18 2 24 8-6 14-18 26-36 30-6 2-12 4-18 8v0z" opacity=".85"/>
+    </svg>
+    <svg class="corner tr" viewBox="0 0 120 120" aria-hidden="true">
+      <path fill="#d7a94e" d="M12 88c22-6 30-22 34-36 6-22 20-32 36-36 10-2 18 0 24 6 6 6 8 14 6 24-4 16-14 30-36 36-14 4-30 12-36 34H12V88zm20 6c8-18 22-26 38-30 18-5 26-14 30-28 2-8 1-14-3-18-4-4-10-5-18-3-14 4-23 12-28 30-4 16-12 30-30 38h11z"/>
+      <path fill="#d7a94e" d="M22 98c10-4 18-10 24-18 6-8 8-18 6-28 10 0 18 2 24 8-6 14-18 26-36 30-6 2-12 4-18 8v0z" opacity=".85"/>
+    </svg>
+    <svg class="corner br" viewBox="0 0 120 120" aria-hidden="true">
+      <path fill="#d7a94e" d="M12 88c22-6 30-22 34-36 6-22 20-32 36-36 10-2 18 0 24 6 6 6 8 14 6 24-4 16-14 30-36 36-14 4-30 12-36 34H12V88zm20 6c8-18 22-26 38-30 18-5 26-14 30-28 2-8 1-14-3-18-4-4-10-5-18-3-14 4-23 12-28 30-4 16-12 30-30 38h11z"/>
+      <path fill="#d7a94e" d="M22 98c10-4 18-10 24-18 6-8 8-18 6-28 10 0 18 2 24 8-6 14-18 26-36 30-6 2-12 4-18 8v0z" opacity=".85"/>
+    </svg>
+    <svg class="corner bl" viewBox="0 0 120 120" aria-hidden="true">
+      <path fill="#d7a94e" d="M12 88c22-6 30-22 34-36 6-22 20-32 36-36 10-2 18 0 24 6 6 6 8 14 6 24-4 16-14 30-36 36-14 4-30 12-36 34H12V88zm20 6c8-18 22-26 38-30 18-5 26-14 30-28 2-8 1-14-3-18-4-4-10-5-18-3-14 4-23 12-28 30-4 16-12 30-30 38h11z"/>
+      <path fill="#d7a94e" d="M22 98c10-4 18-10 24-18 6-8 8-18 6-28 10 0 18 2 24 8-6 14-18 26-36 30-6 2-12 4-18 8v0z" opacity=".85"/>
+    </svg>
+
     <header class="top">
-      <h1 class="gold" id="menuTitle">Burgers &amp; Pasta</h1>
+      <h1 class="gold" id="menuTitle">Rumi Cafe Menu</h1>
+
+      <div class="actions">
+        <a class="wa-btn" href="https://wa.me/96898183175" target="_blank" rel="noopener">
+          Order on WhatsApp • +968 9818 3175
+        </a>
+        <div class="currency-note">All prices in <b>OMR</b></div>
+      </div>
+
+      <nav class="jump" id="jumpNav" aria-label="Menu Categories"></nav>
     </header>
+
     <div id="menuContent"></div>
+
+    <section class="portfolio" id="portfolio">
+      <h2 class="portfolio-title gold">Product Portfolio</h2>
+      <p class="portfolio-sub">Add photos for your items — this becomes your “next level” menu gallery.</p>
+
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- Image modal -->
+    <div class="modal" id="modal" aria-hidden="true">
+      <div class="modal-backdrop" id="modalClose"></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-label="Image preview">
+        <img id="modalImg" alt="" />
+        <div class="modal-meta">
+          <div class="modal-name" id="modalName"></div>
+          <div class="modal-desc" id="modalDesc"></div>
+          <a class="modal-wa" id="modalWa" href="https://wa.me/96898183175" target="_blank" rel="noopener">
+            Order on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <script src="menu-data.js"></script>
   <script>
+    // ---------- Helpers ----------
     const root = document.getElementById("menuContent");
-    document.getElementById("menuTitle").innerHTML = MENU.title;
+    const jumpNav = document.getElementById("jumpNav");
+    const gallery = document.getElementById("gallery");
 
-    function sectionHeader(title){
+    function slug(s){
+      return String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+    }
+
+    function sectionHeader(title, id){
       return `
-        <div class="section-title gold">
-          <span class="rule"></span>
+        <div class="section-title gold" id="${id}">
+          <span class="rule"></span><span class="flourish"></span>
           <span>${title}</span>
-          <span class="rule"></span>
+          <span class="flourish"></span><span class="rule"></span>
         </div>
       `;
     }
@@ -42,19 +102,76 @@
             <h3 class="name gold">${item.name}</h3>
             ${item.desc ? `<p class="desc">${descHtml}</p>` : ``}
           </div>
-          <div class="price gold">${item.price}</div>
+          <div class="price gold">${item.price}<span class="omr">OMR</span></div>
         </article>
       `;
     }
 
+    function buildWhatsAppText(item){
+      const msg = `Hello Rumi Cafe, I want to order: ${item.name} (${item.price} OMR).`;
+      return "https://wa.me/96898183175?text=" + encodeURIComponent(msg);
+    }
+
+    // ---------- Render Menu ----------
+    document.getElementById("menuTitle").innerHTML = MENU.title;
+
     let html = "";
+    let navHtml = "";
+
     for (const sec of MENU.sections){
-      html += sectionHeader(sec.title);
+      const id = slug(sec.title);
+      navHtml += `<a class="jump-link" href="#${id}">${sec.title}</a>`;
+
+      html += sectionHeader(sec.title, id);
       html += `<section class="items">`;
       for (const it of sec.items) html += itemCard(it);
-      html += `</section>`;
+      html += `</section><div class="spacer"></div>`;
     }
+
     root.innerHTML = html;
-  </script>
-</body>
-</html>
+    jumpNav.innerHTML = navHtml;
+
+    // ---------- Portfolio / Gallery ----------
+    // Shows only items that have an "img" field in menu-data.js
+    const galleryItems = [];
+    for (const sec of MENU.sections){
+      for (const it of sec.items){
+        if (it.img) galleryItems.push(it);
+      }
+    }
+
+    if (galleryItems.length === 0){
+      gallery.innerHTML = `
+        <div class="gallery-empty">
+          No photos added yet. To enable portfolio images:
+          <br><br>
+          1) Create folder: <b>images/</b> in your repo
+          <br>
+          2) Upload your food photos inside it
+          <br>
+          3) In <b>menu-data.js</b>, add: <b>img: "images/yourphoto.jpg"</b> for each item
+        </div>
+      `;
+    } else {
+      gallery.innerHTML = galleryItems.map(it => `
+        <button class="card" data-name="${it.name}" data-desc="${it.desc || ""}" data-img="${it.img}" data-wa="${buildWhatsAppText(it)}">
+          <div class="card-imgwrap">
+            <img src="${it.img}" alt="${it.name}">
+          </div>
+          <div class="card-body">
+            <div class="card-name gold">${it.name}</div>
+            <div class="card-price gold">${it.price}<span class="omr">OMR</span></div>
+          </div>
+        </button>
+      `).join("");
+    }
+
+    // ---------- Modal logic ----------
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalName = document.getElementById("modalName");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalWa = document.getElementById("modalWa");
+    const modalClose = document.getElementById("modalClose");
+
+    function openModal({name, desc, img,
