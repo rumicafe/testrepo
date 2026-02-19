@@ -5,56 +5,60 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Rumi Café Menu</title>
 
-  <!-- Optional: nicer font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg1:#190526;
+      --bg1:#17031f;
       --bg2:#2a0b3a;
+      --glass:rgba(255,255,255,0.08);
+      --line:rgba(255,255,255,0.14);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.68);
       --gold:#f3c77a;
       --gold2:#e0b96c;
-      --glass: rgba(255,255,255,0.08);
-      --glass2: rgba(255,255,255,0.12);
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.70);
-      --shadow: 0 18px 50px rgba(0,0,0,0.35);
+      --shadow:0 18px 55px rgba(0,0,0,0.38);
     }
-
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:Poppins, Arial, Helvetica, sans-serif;
       color:var(--text);
-      background: radial-gradient(1200px 700px at 20% 10%, #3a0f55 0%, transparent 60%),
-                  radial-gradient(900px 600px at 85% 20%, #2a0b3a 0%, transparent 55%),
-                  linear-gradient(180deg, var(--bg1), var(--bg2));
       min-height:100vh;
+      background:
+        radial-gradient(1200px 650px at 15% 10%, rgba(126,39,190,0.35), transparent 60%),
+        radial-gradient(950px 650px at 85% 25%, rgba(42,11,58,0.65), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
       overflow-x:hidden;
     }
 
-    /* subtle background sparkle */
+    /* subtle floating particles */
     .sparkle{
-      position:fixed; inset:-200px;
-      background-image:
-        radial-gradient(circle at 30% 30%, rgba(243,199,122,0.14) 0 2px, transparent 2px),
-        radial-gradient(circle at 70% 40%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
-        radial-gradient(circle at 55% 75%, rgba(243,199,122,0.10) 0 2px, transparent 2px);
-      background-size: 220px 220px, 180px 180px, 260px 260px;
-      filter: blur(0.2px);
-      opacity:0.55;
+      position:fixed; inset:-240px;
       pointer-events:none;
+      opacity:.55;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(243,199,122,0.12) 0 2px, transparent 2px),
+        radial-gradient(circle at 75% 20%, rgba(255,255,255,0.09) 0 1px, transparent 1px),
+        radial-gradient(circle at 55% 75%, rgba(243,199,122,0.10) 0 2px, transparent 2px);
+      background-size: 240px 240px, 180px 180px, 280px 280px;
       animation: drift 18s linear infinite;
     }
     @keyframes drift{
       from{transform:translate3d(0,0,0)}
-      to{transform:translate3d(-60px,40px,0)}
+      to{transform:translate3d(-70px,45px,0)}
     }
 
-    /* Page transition */
+    .container{
+      width:min(980px, calc(100% - 26px));
+      margin:0 auto;
+      padding:26px 0 70px;
+    }
+
+    /* Page fade-in */
     .page{
       opacity:0;
       transform: translateY(12px);
@@ -65,271 +69,54 @@
       transform: translateY(0);
     }
 
-    .container{
-      width:min(980px, calc(100% - 24px));
-      margin:0 auto;
-      padding:22px 0 60px;
-    }
-
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      padding:14px 14px;
-      border-radius:18px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
-      border:1px solid rgba(255,255,255,0.12);
+    /* FRONT COVER */
+    .cover{
+      margin-top:14px;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
+      padding:26px 18px 22px;
+      text-align:center;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-
-    .logo{
-      width:54px;
-      height:54px;
-      border-radius:14px;
-      overflow:hidden;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+    .logoWrap{
+      width:92px;
+      height:92px;
+      border-radius:22px;
+      margin:0 auto 14px;
+      border:1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
       display:flex;
       align-items:center;
       justify-content:center;
-      flex:0 0 auto;
+      overflow:hidden;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.28);
     }
-    .logo img{
+    .logoWrap img{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
     }
 
-    .titlewrap{
-      min-width:0;
-      text-align:left;
-    }
-    .title{
+    .brand{
       margin:0;
-      font-size:20px;
-      line-height:1.1;
-      font-weight:700;
+      font-size:32px;
+      font-weight:800;
       color:var(--gold);
       letter-spacing:0.2px;
     }
-    .subtitle{
-      margin:4px 0 0;
-      font-size:12px;
-      color:var(--muted);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 52vw;
-    }
-
-    .quick{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      text-decoration:none;
-      font-weight:600;
+    .tagline{
+      margin:8px 0 0;
       font-size:13px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.06);
-      color:var(--text);
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
-      user-select:none;
-    }
-    .pill:hover{
-      transform: translateY(-2px);
-      background:rgba(255,255,255,0.10);
-      border-color: rgba(243,199,122,0.35);
-    }
-
-    .hero{
-      margin-top:18px;
-      padding:18px 16px;
-      border-radius:18px;
-      background: linear-gradient(180deg, rgba(243,199,122,0.12), rgba(255,255,255,0.06));
-      border:1px solid rgba(255,255,255,0.12);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      text-align:center;
-    }
-
-    .hero h2{
-      margin:6px 0 6px;
-      font-size:22px;
-      letter-spacing:0.2px;
-    }
-    .hero p{
-      margin:0 0 12px;
       color:var(--muted);
-      font-size:13px;
     }
 
-    .ctaRow{
+    .socialRow{
+      margin:18px 0 18px;
       display:flex;
       gap:10px;
       justify-content:center;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:12px 18px;
-      border-radius:14px;
-      text-decoration:none;
-      font-weight:700;
-      font-size:14px;
-      border:1px solid rgba(255,255,255,0.12);
-      transition: transform .18s ease, filter .18s ease, background .18s ease;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-    }
-    .btn:hover{ transform: translateY(-2px); filter: brightness(1.03); }
-
-    .btn-gold{
-      background: linear-gradient(180deg, var(--gold), var(--gold2));
-      color:#2a0b3a;
-      border-color: rgba(243,199,122,0.55);
-    }
-    .btn-insta{
-      background: linear-gradient(180deg, #ff4aa2, #e1306c);
-      color:white;
-      border-color: rgba(255,74,162,0.55);
-    }
-    .btn-ghost{
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-    }
-
-    .menuCard{
-      margin-top:18px;
-      padding:14px;
-      border-radius:18px;
-      background: rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.12);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-    }
-
-    .menuGrid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-    }
-
-    .menuImg{
-      width:100%;
-      height:auto;
-      display:block;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 18px 45px rgba(0,0,0,0.32);
-      transform: translateY(0);
-      transition: transform .18s ease;
-      background: rgba(255,255,255,0.04);
-    }
-    .menuImg:hover{ transform: translateY(-3px); }
-
-    .footer{
-      margin-top:18px;
-      text-align:center;
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    /* mobile tweaks */
-    @media (max-width:520px){
-      .topbar{padding:12px}
-      .logo{width:48px;height:48px;border-radius:12px}
-      .title{font-size:18px}
-      .hero h2{font-size:20px}
-      .btn{width:100%}
-      .quick{width:100%; justify-content:flex-start}
-      .subtitle{max-width: 70vw;}
-    }
-  </style>
-</head>
-
-<body>
-  <div class="sparkle"></div>
-
-  <main class="page" id="page">
-    <div class="container">
-
-      <!-- Top bar -->
-      <div class="topbar">
-        <div class="brand">
-          <!-- Upload your logo as logo.png in the same repo -->
-          <div class="logo">
-            <img src="./logo.png" alt="Rumi Café Logo" onerror="this.style.display='none'">
-          </div>
-
-          <div class="titlewrap">
-            <h1 class="title">Rumi Café Menu</h1>
-            <p class="subtitle">Purple vibes • Fresh food • Good mood</p>
-          </div>
-        </div>
-
-        <div class="quick">
-          <a class="pill" href="#menu">🍔 View Menu</a>
-          <a class="pill" href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 Location</a>
-          <a class="pill" href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Instagram</a>
-        </div>
-      </div>
-
-      <!-- Hero -->
-      <section class="hero">
-        <h2>Welcome to Rumi Café</h2>
-        <p>Scan, scroll, and order your favorites.</p>
-
-        <div class="ctaRow">
-          <a class="btn btn-gold" href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 Find Us</a>
-          <a class="btn btn-insta" href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Follow Us</a>
-          <a class="btn btn-ghost" href="#menu">👇 Open Menu</a>
-        </div>
-      </section>
-
-      <!-- Menu images -->
-      <section class="menuCard" id="menu">
-        <div class="menuGrid">
-          <img class="menuImg" src="./1.png" alt="Menu page 1">
-          <img class="menuImg" src="./2.png" alt="Menu page 2">
-        </div>
-      </section>
-
-      <div class="footer">
-        © <span id="y"></span> Rumi Café • Powered by GitHub Pages
-      </div>
-
-    </div>
-  </main>
-
-  <script>
-    // Page fade-in transition
-    window.addEventListener("load", () => {
-      document.getElementById("page").classList.add("loaded");
-      document.getElementById("y").textContent = new Date().getFullYear();
-    });
-  </script>
-</body>
-</html>
+      flex
