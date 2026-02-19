@@ -7,51 +7,56 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <main class="page">
-    <header class="header">
-      <div class="brand">
-        <h1 class="title">Rumi Cafe</h1>
-        <p class="subtitle">Select items • Send order on WhatsApp</p>
+    <header class="hero">
+      <div class="hero-left">
+        <div class="brand">
+          <h1>Rumi Cafe</h1>
+          <p>Select items → send on WhatsApp</p>
+        </div>
+
+        <div class="hero-meta">
+          <span class="pill">All prices in <b>OMR</b></span>
+          <a class="pill pill-link" href="https://wa.me/96898183175" target="_blank" rel="noopener">
+            WhatsApp: +968 9818 3175
+          </a>
+        </div>
       </div>
 
-      <div class="header-actions">
-        <span class="chip">All prices in <b>OMR</b></span>
-        <a class="chip chip-wa" href="https://wa.me/96898183175" target="_blank" rel="noopener">
-          WhatsApp: +968 9818 3175
-        </a>
+      <div class="hero-right">
+        <div class="search">
+          <input id="searchInput" type="search" placeholder="Search menu (burger, shake, wrap…)" />
+        </div>
       </div>
     </header>
 
     <section class="layout">
       <!-- MENU -->
-      <section class="card">
-        <div class="card-head">
-          <h2>Menu</h2>
-          <div class="search">
-            <input id="searchInput" type="search" placeholder="Search items (e.g., burger, shake)..." />
-          </div>
-        </div>
-
+      <section class="panel">
         <div id="menuRoot" class="menu"></div>
       </section>
 
       <!-- ORDER -->
-      <aside class="card order">
-        <div class="card-head">
-          <h2>Your Order</h2>
+      <aside class="panel order">
+        <div class="order-head">
+          <div>
+            <h2>Your Order</h2>
+            <p class="muted small">Tap items to add. Adjust quantity.</p>
+          </div>
           <button id="clearBtn" class="btn btn-ghost" type="button">Clear</button>
         </div>
 
         <div id="orderList" class="order-list">
-          <p class="muted">No items selected yet.</p>
+          <div class="empty">No items selected yet.</div>
         </div>
 
-        <div class="totals">
+        <div class="summary">
           <div class="row">
             <span class="muted">Items</span>
             <b id="itemsCount">0</b>
@@ -63,16 +68,16 @@
         </div>
 
         <div class="notes">
-          <label for="notesInput" class="muted">Notes (optional)</label>
-          <textarea id="notesInput" rows="3" placeholder="E.g., no onions, extra sauce..."></textarea>
+          <label for="notesInput" class="muted small">Notes (optional)</label>
+          <textarea id="notesInput" rows="3" placeholder="e.g., no onions, extra sauce…"></textarea>
         </div>
 
         <button id="whatsAppBtn" class="btn btn-primary" type="button">
           Send Order on WhatsApp
         </button>
 
-        <p class="hint">
-          Tip: After WhatsApp opens, press <b>Send</b>.
+        <p class="muted tiny">
+          WhatsApp will open with your order message — press <b>Send</b>.
         </p>
       </aside>
     </section>
@@ -100,13 +105,20 @@
       return `${sectionTitle}::${itemName}`;
     }
 
+    function getItemByKey(k){
+      const [secTitle, itemName] = k.split("::");
+      const sec = MENU.sections.find(s => s.title === secTitle);
+      if (!sec) return null;
+      const it = sec.items.find(i => i.name === itemName);
+      return it || null;
+    }
+
     // ===== Render Menu =====
     function renderMenu(filterText = ""){
       const q = filterText.trim().toLowerCase();
-
       let html = "";
+
       for (const sec of MENU.sections){
-        // Filter section items
         const items = sec.items.filter(it => {
           if (!q) return true;
           return (
@@ -120,7 +132,7 @@
 
         html += `
           <div class="section">
-            <div class="section-title">
+            <div class="section-head">
               <h3>${sec.title}</h3>
             </div>
             <div class="items">
@@ -130,8 +142,8 @@
         `;
       }
 
-      menuRoot.innerHTML = html || `<p class="muted">No results found.</p>`;
-      syncMenuChecks(); // keep checkboxes in sync after rerender
+      menuRoot.innerHTML = html || `<div class="empty">No results found.</div>`;
+      syncMenuUI();
     }
 
     function renderItem(sectionTitle, item){
@@ -141,50 +153,51 @@
 
       return `
         <div class="item" data-key="${k}">
-          <label class="check">
-            <input type="checkbox" class="pick" ${isSelected ? "checked" : ""} />
-            <span class="checkmark"></span>
-          </label>
+          <button class="pick ${isSelected ? "on" : ""}" type="button" aria-label="Select ${item.name}">
+            <span class="dot"></span>
+          </button>
 
           <div class="info">
-            <div class="topline">
+            <div class="line">
               <div class="name">${item.name}</div>
-              <div class="price">${item.price} <span class="omr">OMR</span></div>
+              <div class="price">${item.price} <span>OMR</span></div>
             </div>
             ${item.desc ? `<div class="desc">${item.desc}</div>` : ""}
             <div class="controls">
-              <button class="qty-btn" data-action="dec" type="button" ${isSelected ? "" : "disabled"}>-</button>
+              <button class="qbtn" data-action="dec" type="button" ${isSelected ? "" : "disabled"}>-</button>
               <span class="qty">${qty}</span>
-              <button class="qty-btn" data-action="inc" type="button" ${isSelected ? "" : "disabled"}>+</button>
+              <button class="qbtn" data-action="inc" type="button" ${isSelected ? "" : "disabled"}>+</button>
+              <span class="muted tiny">${isSelected ? "Added" : "Tap to add"}</span>
             </div>
           </div>
         </div>
       `;
     }
 
-    function syncMenuChecks(){
+    function syncMenuUI(){
       document.querySelectorAll(".item").forEach(row => {
         const k = row.getAttribute("data-key");
-        const picked = row.querySelector(".pick");
+        const pick = row.querySelector(".pick");
         const dec = row.querySelector('[data-action="dec"]');
         const inc = row.querySelector('[data-action="inc"]');
         const qtyEl = row.querySelector(".qty");
+        const hint = row.querySelector(".controls .tiny");
 
         const isSelected = selected.has(k);
-        picked.checked = isSelected;
+        pick.classList.toggle("on", isSelected);
         dec.disabled = !isSelected;
         inc.disabled = !isSelected;
-
         qtyEl.textContent = isSelected ? selected.get(k).qty : 1;
+        if (hint) hint.textContent = isSelected ? "Added" : "Tap to add";
       });
     }
 
-    // ===== Order Summary =====
+    // ===== Render Order =====
     function renderOrder(){
-      const entries = Array.from(selected.values());
+      const entries = Array.from(selected.entries()); // [key, {name, price, qty}]
 
       if (entries.length === 0){
-        orderList.innerHTML = `<p class="muted">No items selected yet.</p>`;
+        orderList.innerHTML = `<div class="empty">No items selected yet.</div>`;
         itemsCount.textContent = "0";
         totalValue.textContent = "0.00";
         return;
@@ -193,38 +206,36 @@
       let totalItems = 0;
       let total = 0;
 
-      const lines = entries.map(e => {
+      orderList.innerHTML = entries.map(([k, e]) => {
         const lineTotal = Number(e.price) * e.qty;
         totalItems += e.qty;
         total += lineTotal;
 
         return `
-          <div class="order-line">
-            <div class="ol-left">
-              <div class="ol-name">${e.name}</div>
-              <div class="ol-meta muted">${e.qty} × ${money(e.price)} OMR</div>
+          <div class="order-row" data-key="${k}">
+            <div class="or-left">
+              <div class="or-name">${e.name}</div>
+              <div class="muted tiny">${e.qty} × ${money(e.price)} OMR</div>
             </div>
-            <div class="ol-right"><b>${money(lineTotal)}</b> <span class="muted">OMR</span></div>
+            <div class="or-right">
+              <div class="or-total"><b>${money(lineTotal)}</b><span class="muted tiny"> OMR</span></div>
+              <div class="or-qty">
+                <button class="qbtn sm" data-action="dec" type="button">-</button>
+                <span class="qty sm">${e.qty}</span>
+                <button class="qbtn sm" data-action="inc" type="button">+</button>
+              </div>
+            </div>
           </div>
         `;
       }).join("");
 
-      orderList.innerHTML = lines;
       itemsCount.textContent = String(totalItems);
       totalValue.textContent = money(total);
     }
 
-    // ===== Find item from MENU by key =====
-    function getItemByKey(k){
-      const [secTitle, itemName] = k.split("::");
-      const sec = MENU.sections.find(s => s.title === secTitle);
-      if (!sec) return null;
-      const it = sec.items.find(i => i.name === itemName);
-      if (!it) return null;
-      return it;
-    }
+    // ===== Interactions =====
 
-    // ===== Events =====
+    // Menu clicks: add/remove and quantity
     menuRoot.addEventListener("click", (e) => {
       const row = e.target.closest(".item");
       if (!row) return;
@@ -232,32 +243,51 @@
       const item = getItemByKey(k);
       if (!item) return;
 
-      // Checkbox toggle
-      if (e.target.classList.contains("pick") || e.target.closest(".check")){
-        const checked = row.querySelector(".pick").checked;
-        if (checked){
-          selected.set(k, { name: item.name, price: item.price, qty: 1 });
-        } else {
-          selected.delete(k);
-        }
-        syncMenuChecks();
+      // Add/remove
+      if (e.target.closest(".pick")){
+        if (selected.has(k)) selected.delete(k);
+        else selected.set(k, { name: item.name, price: item.price, qty: 1 });
+
+        syncMenuUI();
         renderOrder();
         return;
       }
 
-      // Qty buttons
-      if (e.target.classList.contains("qty-btn")){
+      // Qty controls
+      const btn = e.target.closest(".qbtn");
+      if (btn){
         if (!selected.has(k)) return;
-        const action = e.target.getAttribute("data-action");
+        const action = btn.getAttribute("data-action");
         const entry = selected.get(k);
 
         if (action === "inc") entry.qty += 1;
         if (action === "dec") entry.qty = Math.max(1, entry.qty - 1);
 
         selected.set(k, entry);
-        syncMenuChecks();
+        syncMenuUI();
         renderOrder();
       }
+    });
+
+    // Order panel qty controls
+    orderList.addEventListener("click", (e) => {
+      const row = e.target.closest(".order-row");
+      if (!row) return;
+      const k = row.getAttribute("data-key");
+      if (!selected.has(k)) return;
+
+      const btn = e.target.closest(".qbtn");
+      if (!btn) return;
+
+      const action = btn.getAttribute("data-action");
+      const entry = selected.get(k);
+
+      if (action === "inc") entry.qty += 1;
+      if (action === "dec") entry.qty = Math.max(1, entry.qty - 1);
+
+      selected.set(k, entry);
+      syncMenuUI();
+      renderOrder();
     });
 
     document.getElementById("clearBtn").addEventListener("click", () => {
@@ -277,7 +307,6 @@
         return;
       }
 
-      // Build message
       let msg = "Hello Rumi Cafe, I want to order:%0A";
       let total = 0;
 
