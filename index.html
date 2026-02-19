@@ -15,7 +15,6 @@
   --gold2:#e0b96c;
   --text:rgba(255,255,255,0.92);
   --muted:rgba(255,255,255,0.68);
-  --glass:rgba(255,255,255,0.06);
   --line:rgba(255,255,255,0.12);
   --shadow:0 25px 70px rgba(0,0,0,0.48);
 }
@@ -61,13 +60,9 @@ body{
   z-index:9999;
   transition: opacity .45s ease, visibility .45s ease;
 }
-.loaderWrap.hide{
-  opacity:0;
-  visibility:hidden;
-}
+.loaderWrap.hide{ opacity:0; visibility:hidden; }
 .loader{
-  width:56px;
-  height:56px;
+  width:56px; height:56px;
   border-radius:999px;
   border:4px solid rgba(255,255,255,0.14);
   border-top-color: var(--gold);
@@ -88,10 +83,7 @@ body{
   transform: translateY(10px);
   transition: opacity 700ms ease, transform 700ms ease;
 }
-.page.loaded{
-  opacity:1;
-  transform: translateY(0);
-}
+.page.loaded{ opacity:1; transform: translateY(0); }
 
 /* ===== Premium Card ===== */
 .card{
@@ -124,17 +116,27 @@ body{
   50%{opacity:.9; transform:scale(1.06)}
 }
 
+/* ===== Dervish (NO rotation, premium look) ===== */
 .dervish{
   width:140px;
   margin:0 auto 22px;
-  opacity:0.92;
-  animation: rotate 18s linear infinite;
+  opacity:0.95;
   position:relative;
   z-index:1;
+
+  /* Gold tint effect */
+  filter: sepia(1) saturate(1.35) hue-rotate(12deg) brightness(1.08);
+  /* Soft glow */
+  drop-shadow: 0 12px 30px rgba(243,199,122,0.22);
 }
-@keyframes rotate{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
+
+/* Very subtle breathing animation (optional but premium) */
+.dervishSoft{
+  animation: breathe 5.5s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-4px) scale(1.01)}
 }
 
 h1{
@@ -153,10 +155,17 @@ h1{
   position:relative;
   z-index:1;
 }
+.locText{
+  margin-top:10px;
+  font-size:13px;
+  color:rgba(255,255,255,0.78);
+  position:relative;
+  z-index:1;
+}
 
 /* Buttons */
 .actions{
-  margin-top:28px;
+  margin-top:26px;
   display:grid;
   gap:12px;
   position:relative;
@@ -181,7 +190,6 @@ h1{
   background: rgba(255,255,255,0.12);
   border-color: rgba(243,199,122,0.35);
 }
-
 .btnGold{
   border-radius:16px;
   padding:16px 18px;
@@ -210,9 +218,7 @@ h1{
   display:block;
   animation: menuIn .6s ease forwards;
 }
-@keyframes menuIn{
-  to{ opacity:1; transform: translateY(0); }
-}
+@keyframes menuIn{ to{ opacity:1; transform: translateY(0); } }
 
 .menuCard{
   margin-top:18px;
@@ -223,7 +229,6 @@ h1{
   backdrop-filter: blur(14px);
   padding:14px;
 }
-
 .menuTop{
   display:flex;
   justify-content:space-between;
@@ -231,11 +236,7 @@ h1{
   gap:10px;
   padding:6px 6px 12px;
 }
-.menuTitle{
-  margin:0;
-  font-size:16px;
-  font-weight:800;
-}
+.menuTitle{ margin:0; font-size:16px; font-weight:800; }
 .backBtn{
   text-decoration:none;
   color:var(--text);
@@ -298,9 +299,9 @@ h1{
     <div class="loader"></div>
   </div>
 
-  <!-- WhatsApp button (replace number) -->
+  <!-- WhatsApp button -->
   <a class="whatsapp" target="_blank"
-     href="https://wa.me/WHATSAPP_NUMBER_HERE?text=Hello%20Rumi%20Caf%C3%A9%2C%20I%20want%20to%20order%20please.">
+     href="https://wa.me/96898183175?text=Hello%20Rumi%20Caf%C3%A9%2C%20I%20want%20to%20order%20please.">
      💬 WhatsApp Order
   </a>
 
@@ -311,13 +312,15 @@ h1{
       <section class="card" id="top">
         <div class="glow"></div>
 
-        <img src="dervish.png" class="dervish" alt="Rumi">
+        <!-- removed spinning; added soft premium breathe -->
+        <img src="dervish.png" class="dervish dervishSoft" alt="Rumi">
 
         <h1>Rumi Café</h1>
         <div class="tagline">Where flavor meets tradition</div>
+        <div class="locText">📍 Al Mawaleh</div>
 
         <div class="actions">
-          <a class="btn" href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 View Location</a>
+          <a class="btn" href="https://maps.app.goo.gl/or8hHa5wkgUBgxMdA" target="_blank">📍 Al Mawaleh – View Location</a>
           <a class="btn" href="https://www.instagram.com/rumi_cafee" target="_blank">📸 Follow on Instagram</a>
 
           <a class="btn btnGold" href="#menu" id="openMenuBtn">🍔 Open Menu</a>
