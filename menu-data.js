@@ -185,3 +185,53 @@ const MENU = {
           name: "Fresh Lime",
           desc: "Classic fresh lime refreshment.",
           price: "0.6",
+        },
+      ],
+    },
+
+    // ==========================
+    // PARATHA
+    // ==========================
+    {
+      title: "Paratha",
+      items: [
+        {
+          name: "Old School Paratha",
+          desc: "Traditional crispy layered paratha.",
+          price: "0.2",
+        },
+        {
+          name: "Potato Cheese Paratha",
+          desc: "Stuffed paratha filled with potato and melted cheese.",
+          price: "0.5",
+        },
+        {
+          name: "Egg Cheese Paratha",
+          desc: "Fresh paratha stuffed with seasoned egg filling.",
+          price: "0.6",
+        },
+        {
+          name: "Honey Cheese Paratha",
+          desc: "Sweet paratha filled with honey and melted cheese.",
+          price: "0.5",
+        },
+      ],
+    },
+
+    // ==========================
+    // DESSERT
+    // ==========================
+    {
+      title: "Desserts",
+      items: [
+        {
+          name: "Skillet Brownies",
+          desc: "Warm in-house baked chocolate brownies served with a delightful warm and cool combination.",
+          price: "1",
+        },
+      ],
+    },
+
+  ],
+};
+
