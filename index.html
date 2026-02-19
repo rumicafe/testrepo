@@ -174,4 +174,38 @@
     const modalWa = document.getElementById("modalWa");
     const modalClose = document.getElementById("modalClose");
 
-    function openModal({name, desc, img,
+    function openModal({name, desc, img, wa}){
+      modalImg.src = img;
+      modalImg.alt = name;
+      modalName.textContent = name;
+      modalDesc.textContent = desc;
+      modalWa.href = wa;
+
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(){
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+      modalImg.src = "";
+    }
+
+    gallery.addEventListener("click", (e) => {
+      const btn = e.target.closest(".card");
+      if (!btn) return;
+      openModal({
+        name: btn.dataset.name,
+        desc: btn.dataset.desc,
+        img: btn.dataset.img,
+        wa: btn.dataset.wa
+      });
+    });
+
+    modalClose.addEventListener("click", closeModal);
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+  </script>
+</body>
+</html>
