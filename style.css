@@ -1,0 +1,69 @@
+body{
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:18px;
+  background:linear-gradient(160deg, #4b0f5f, #2a0535 55%, #1a021f);
+  color:#f4e6bf;
+  font-family:"EB Garamond", serif;
+}
+
+.menu{
+  width:min(860px, 100%);
+  padding:44px;
+  border:4px solid #d7a94e;
+  border-radius:10px;
+  background:linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.3));
+}
+
+.gold{
+  background:linear-gradient(180deg, #f6e1a3, #d7a94e 55%, #8a5a18);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.top h1{
+  text-align:center;
+  font-family:"Cinzel Decorative", serif;
+  font-weight:900;
+  font-size:48px;
+}
+
+.section-title{
+  margin:25px 0 10px;
+  text-align:center;
+  font-family:"Cinzel Decorative", serif;
+  font-size:26px;
+}
+
+.rule{
+  display:block;
+  height:2px;
+  background:#d7a94e;
+  margin:8px auto;
+  width:60%;
+}
+
+.item{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap:14px;
+  padding:12px 0;
+}
+
+.name{
+  font-size:28px;
+  margin:0 0 5px;
+}
+
+.desc{
+  margin:0;
+  font-size:18px;
+}
+
+.price{
+  font-size:26px;
+  font-family:"Cinzel Decorative", serif;
+}

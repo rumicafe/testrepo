@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rumi Cafe Menu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="menu" id="menuRoot">
+    <header class="top">
+      <h1 class="gold" id="menuTitle">Burgers &amp; Pasta</h1>
+    </header>
+    <div id="menuContent"></div>
+  </main>
+
+  <script src="menu-data.js"></script>
+  <script>
+    const root = document.getElementById("menuContent");
+    document.getElementById("menuTitle").innerHTML = MENU.title;
+
+    function sectionHeader(title){
+      return `
+        <div class="section-title gold">
+          <span class="rule"></span>
+          <span>${title}</span>
+          <span class="rule"></span>
+        </div>
+      `;
+    }
+
+    function itemCard(item){
+      const descHtml = (item.desc || "").replaceAll("\n", "<br>");
+      return `
+        <article class="item">
+          <div>
+            <h3 class="name gold">${item.name}</h3>
+            ${item.desc ? `<p class="desc">${descHtml}</p>` : ``}
+          </div>
+          <div class="price gold">${item.price}</div>
+        </article>
+      `;
+    }
+
+    let html = "";
+    for (const sec of MENU.sections){
+      html += sectionHeader(sec.title);
+      html += `<section class="items">`;
+      for (const it of sec.items) html += itemCard(it);
+      html += `</section>`;
+    }
+    root.innerHTML = html;
+  </script>
+</body>
+</html>
