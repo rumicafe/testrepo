@@ -42,19 +42,19 @@ const MENU = {
       title: "Fresh Juices",
       items: [
         { name: "Orange Juice", desc: "Freshly squeezed natural pulpy orange juice", price: "0.8" },
-        { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.8" },
+     //   { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.8" },
       ],
     },
     {
       title: "Shakes",
       items: [
         { name: "Oreo Shake", desc: "Creamy Oreo milkshake blended to perfection", price: "1" },
-        { name: "Chocolate Ice Cream Shake", desc: "Rich chocolate ice cream blended into a smooth milkshake", price: "1" },
-        { name: "Avocado Shake", desc: "Smooth creamy avocado shake naturally refreshing with nuts and honey", price: "1" },
-        { name: "Protein Shake", desc: "High protein energy shake perfect for a healthy boost", price: "1" },
+       // { name: "Chocolate Ice Cream Shake", desc: "Rich chocolate ice cream blended into a smooth milkshake", price: "1" },
+       // { name: "Avocado Shake", desc: "Smooth creamy avocado shake naturally refreshing with nuts and honey", price: "1" },
+       // { name: "Protein Shake", desc: "High protein energy shake perfect for a healthy boost", price: "1" },
       ],
     },
-    {
+   /* {
       title: "Refreshers",
       items: [
         { name: "Blueberry fusion", desc: "Refreshing blueberry flavored cooler", price: "0.8" },
@@ -62,7 +62,7 @@ const MENU = {
         { name: "Mint Margarita", desc: "Chilled mint lemon margarita cooler", price: "0.8" },
         { name: "Fresh Lime", desc: "Classic fresh lime refreshment", price: "0.6" },
       ],
-    },
+    }, */
     {
       title: "Paratha",
       items: [
