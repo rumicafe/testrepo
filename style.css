@@ -15,7 +15,7 @@ body{
   margin:0;
   font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color:var(--text);
-  background: linear-gradient(180deg, var(--bg-top), var(--bg-bot));
+  background: #2b0a3d; /* solid premium purple */
 }
 
 .page{
