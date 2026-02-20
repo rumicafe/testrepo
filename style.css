@@ -1,256 +1,344 @@
-// Rumi Cafe Menu Ordering Script
-// Requires: menu-data.js defining `MENU`
-// WhatsApp number (no +)
-const WHATSAPP_NUMBER = "96898183175";
+:root{
+  --bg-top:#4b0f5f;
+  --bg-bot:#1f0428;
 
-// Elements
-const menuRoot = document.getElementById("menuRoot");
-const orderList = document.getElementById("orderList");
-const itemsCount = document.getElementById("itemsCount");
-const totalValue = document.getElementById("totalValue");
-const notesInput = document.getElementById("notesInput");
-const clearBtn = document.getElementById("clearBtn");
-const whatsAppBtn = document.getElementById("whatsAppBtn");
+  --card: rgba(255,255,255,.06);
+  --line: rgba(255,255,255,.10);
 
-// State: key -> { name, price, qty }
-const selected = new Map();
-
-function money(n) {
-  const x = Number(n || 0);
-  return x.toFixed(2);
+  --text:#f6efff;
+  --muted: rgba(246,239,255,.72);
+  --accent:#e9c46a; /* subtle premium gold */
 }
 
-function keyOf(sectionTitle, itemName) {
-  return `${sectionTitle}::${itemName}`;
+*{ box-sizing:border-box; }
+html, body{ height:100%; }
+
+body{
+  margin:0;
+  font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  background: linear-gradient(180deg, var(--bg-top), var(--bg-bot));
 }
 
-function getItemByKey(k) {
-  const [secTitle, itemName] = k.split("::");
-  const sec = MENU.sections.find((s) => s.title === secTitle);
-  if (!sec) return null;
-  return sec.items.find((i) => i.name === itemName) || null;
+.page{
+  width:min(1100px, 100%);
+  margin:0 auto;
+  padding:18px 14px 26px;
 }
 
-// ===== Render Menu =====
-function renderMenu() {
-  let html = "";
-
-  for (const sec of MENU.sections) {
-    html += `
-      <div class="section">
-        <div class="section-head">
-          <h3>${sec.title}</h3>
-        </div>
-
-        <div class="items">
-          ${sec.items.map((it) => renderItem(sec.title, it)).join("")}
-        </div>
-      </div>
-    `;
-  }
-
-  menuRoot.innerHTML = html;
-  syncMenuUI();
+/* Header */
+.hero{
+  border:1px solid var(--line);
+  background: linear-gradient(180deg, var(--card), transparent);
+  border-radius:18px;
+  padding:16px 16px 14px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  backdrop-filter: blur(10px);
 }
 
-function renderItem(sectionTitle, item) {
-  const k = keyOf(sectionTitle, item.name);
-  const isSelected = selected.has(k);
-  const qty = isSelected ? selected.get(k).qty : 1;
-
-  return `
-    <div class="item" data-key="${k}">
-      ${item.image ? `
-        <div class="thumb">
-          <img src="${item.image}" alt="${item.name}" loading="lazy">
-        </div>
-      ` : ""}
-
-      <button class="pick ${isSelected ? "on" : ""}" type="button" aria-label="Select ${item.name}">
-        <span class="dot"></span>
-      </button>
-
-      <div class="info">
-        <div class="line">
-          <div class="name">${item.name}</div>
-          <div class="price">${item.price} <span>OMR</span></div>
-        </div>
-
-        ${item.desc ? `<div class="desc">${item.desc}</div>` : ""}
-
-        <div class="controls">
-          <button class="qbtn" data-action="dec" type="button" ${isSelected ? "" : "disabled"}>-</button>
-          <span class="qty">${qty}</span>
-          <button class="qbtn" data-action="inc" type="button" ${isSelected ? "" : "disabled"}>+</button>
-          <span class="muted tiny">${isSelected ? "Added" : "Tap to add"}</span>
-        </div>
-      </div>
-    </div>
-  `;
+.brand h1{
+  margin:0;
+  font-family: "Playfair Display", serif;
+  font-weight:700;
+  letter-spacing:.2px;
+  font-size:28px;
 }
 
-function syncMenuUI() {
-  document.querySelectorAll(".item").forEach((row) => {
-    const k = row.getAttribute("data-key");
-
-    const pick = row.querySelector(".pick");
-    const dec = row.querySelector('[data-action="dec"]');
-    const inc = row.querySelector('[data-action="inc"]');
-    const qtyEl = row.querySelector(".qty");
-    const hint = row.querySelector(".controls .tiny");
-
-    const isSelected = selected.has(k);
-
-    if (pick) pick.classList.toggle("on", isSelected);
-    if (dec) dec.disabled = !isSelected;
-    if (inc) inc.disabled = !isSelected;
-    if (qtyEl) qtyEl.textContent = isSelected ? selected.get(k).qty : 1;
-    if (hint) hint.textContent = isSelected ? "Added" : "Tap to add";
-  });
+.hero-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:2px;
+  justify-content:flex-end;
 }
 
-// ===== Render Order =====
-function renderOrder() {
-  const entries = Array.from(selected.entries()); // [key, {name, price, qty}]
+.pill{
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.10);
+  border-radius:999px;
+  padding:8px 10px;
+  font-size:12px;
+  color:var(--muted);
+}
+.pill b{ color:var(--text); }
 
-  if (entries.length === 0) {
-    orderList.innerHTML = `<div class="empty">No items selected yet.</div>`;
-    itemsCount.textContent = "0";
-    totalValue.textContent = "0.00";
-    return;
-  }
-
-  let totalItems = 0;
-  let total = 0;
-
-  orderList.innerHTML = entries
-    .map(([k, e]) => {
-      const lineTotal = Number(e.price) * e.qty;
-      totalItems += e.qty;
-      total += lineTotal;
-
-      return `
-        <div class="order-row" data-key="${k}">
-          <div class="or-left">
-            <div class="or-name">${e.name}</div>
-            <div class="muted tiny">${e.qty} × ${money(e.price)} OMR</div>
-          </div>
-
-          <div class="or-right">
-            <div class="or-total"><b>${money(lineTotal)}</b><span class="muted tiny"> OMR</span></div>
-            <div class="or-qty">
-              <button class="qbtn sm" data-action="dec" type="button">-</button>
-              <span class="qty sm">${e.qty}</span>
-              <button class="qbtn sm" data-action="inc" type="button">+</button>
-            </div>
-          </div>
-        </div>
-      `;
-    })
-    .join("");
-
-  itemsCount.textContent = String(totalItems);
-  totalValue.textContent = money(total);
+.pill-link{
+  text-decoration:none;
+  border-color: rgba(233,196,106,.35);
+  color: var(--text);
+}
+.pill-link:hover{
+  background: rgba(233,196,106,.12);
 }
 
-// ===== Interactions =====
+/* Layout */
+.layout{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns: 1.35fr .85fr;
+  gap:14px;
+}
+@media (max-width: 900px){
+  .hero{ flex-direction:column; }
+  .layout{ grid-template-columns: 1fr; }
+  .hero-actions{ justify-content:flex-start; }
+}
 
-// Menu interactions: select + qty
-menuRoot.addEventListener("click", (e) => {
-  const row = e.target.closest(".item");
-  if (!row) return;
+/* Panels */
+.panel{
+  border:1px solid var(--line);
+  background: linear-gradient(180deg, var(--card), transparent);
+  border-radius:18px;
+  overflow:hidden;
+}
 
-  const k = row.getAttribute("data-key");
-  const item = getItemByKey(k);
-  if (!item) return;
+.menu{ padding:14px; }
 
-  // Toggle selection
-  if (e.target.closest(".pick")) {
-    if (selected.has(k)) {
-      selected.delete(k);
-    } else {
-      selected.set(k, { name: item.name, price: item.price, qty: 1 });
-    }
+/* Sections */
+.section{ margin-bottom:14px; }
+.section-head{
+  padding:10px 12px;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.12);
+  border-radius:14px;
+}
+.section-head h3{
+  margin:0;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  color: rgba(233,196,106,.92);
+}
 
-    syncMenuUI();
-    renderOrder();
-    return;
-  }
+.items{
+  margin-top:10px;
+  display:grid;
+  gap:10px;
+}
 
-  // Qty buttons inside menu card
-  const btn = e.target.closest(".qbtn");
-  if (btn) {
-    if (!selected.has(k)) return;
+/* Menu item card + thumbnail */
+.item{
+  display:grid;
+  grid-template-columns: 80px 30px 1fr;
+  gap:14px;
+  align-items:center;
+  padding:12px;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.14);
+  border-radius:16px;
+}
 
-    const action = btn.getAttribute("data-action");
-    const entry = selected.get(k);
+.thumb{
+  width:80px;
+  height:80px;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.15);
+  background: rgba(0,0,0,.12);
+}
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
 
-    if (action === "inc") entry.qty += 1;
-    if (action === "dec") entry.qty = Math.max(1, entry.qty - 1);
+/* Pick button (round toggle) */
+.pick{
+  width:30px; height:30px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.18);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  padding:0;
+}
+.pick .dot{
+  width:10px; height:10px;
+  border-radius:999px;
+  background: rgba(246,239,255,.30);
+}
+.pick.on{
+  border-color: rgba(233,196,106,.60);
+  background: rgba(233,196,106,.12);
+}
+.pick.on .dot{ background: rgba(233,196,106,.95); }
 
-    selected.set(k, entry);
-    syncMenuUI();
-    renderOrder();
-  }
-});
+.info .line{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+}
+.name{
+  font-weight:700;
+  letter-spacing:.1px;
+}
+.price{
+  font-weight:700;
+  color: rgba(233,196,106,.95);
+  white-space:nowrap;
+}
+.price span{
+  color: var(--muted);
+  font-size:11px;
+  margin-left:6px;
+  font-weight:700;
+}
 
-// Order interactions: qty controls
-orderList.addEventListener("click", (e) => {
-  const row = e.target.closest(".order-row");
-  if (!row) return;
+.desc{
+  margin-top:6px;
+  color: var(--muted);
+  font-size:13px;
+  line-height:1.35;
+}
 
-  const k = row.getAttribute("data-key");
-  if (!selected.has(k)) return;
+.controls{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
 
-  const btn = e.target.closest(".qbtn");
-  if (!btn) return;
+.qbtn{
+  width:34px; height:34px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.18);
+  color: var(--text);
+  font-weight:800;
+  cursor:pointer;
+}
+.qbtn:disabled{
+  opacity:.40;
+  cursor:not-allowed;
+}
+.qty{
+  min-width:22px;
+  text-align:center;
+  font-weight:800;
+}
 
-  const action = btn.getAttribute("data-action");
-  const entry = selected.get(k);
+.small{ font-size:12px; }
+.tiny{ font-size:11px; }
+.muted{ color: var(--muted); }
 
-  if (action === "inc") entry.qty += 1;
-  if (action === "dec") entry.qty = Math.max(1, entry.qty - 1);
+/* Order panel */
+.order{
+  padding:14px;
+  position:sticky;
+  top:14px;
+  height: fit-content;
+}
+@media (max-width: 900px){
+  .order{ position:static; }
+}
 
-  selected.set(k, entry);
-  syncMenuUI();
-  renderOrder();
-});
+.order-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--line);
+}
+.order-head h2{
+  margin:0;
+  font-size:16px;
+  letter-spacing:.2px;
+}
 
-// Clear
-clearBtn.addEventListener("click", () => {
-  selected.clear();
-  notesInput.value = "";
-  renderMenu();
-  renderOrder();
-});
+.btn{
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.18);
+  color: var(--text);
+  border-radius:14px;
+  padding:10px 12px;
+  font-weight:800;
+  cursor:pointer;
+}
+.btn-ghost{
+  padding:8px 10px;
+  border-radius:12px;
+  font-weight:700;
+}
+.btn-primary{
+  width:100%;
+  margin-top:10px;
+  border-color: rgba(233,196,106,.60);
+  background: rgba(233,196,106,.16);
+}
+.btn-primary:hover{
+  background: rgba(233,196,106,.22);
+}
 
-// WhatsApp send
-whatsAppBtn.addEventListener("click", () => {
-  if (selected.size === 0) {
-    alert("Please select at least one item.");
-    return;
-  }
+.order-list{
+  padding:12px 0;
+  min-height:120px;
+}
+.empty{
+  border:1px dashed rgba(255,255,255,.18);
+  background: rgba(0,0,0,.10);
+  padding:12px;
+  border-radius:14px;
+  color: var(--muted);
+  font-size:13px;
+}
 
-  let msg = "Hello Rumi Cafe, I want to order:%0A";
-  let total = 0;
+.order-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 0;
+  border-bottom:1px dashed rgba(255,255,255,.14);
+}
+.order-row:last-child{ border-bottom:none; }
 
-  for (const e of selected.values()) {
-    const lineTotal = Number(e.price) * e.qty;
-    total += lineTotal;
-    msg += `• ${e.name} — ${e.qty} × ${money(e.price)} OMR = ${money(lineTotal)} OMR%0A`;
-  }
+.or-name{ font-weight:700; }
+.or-right{
+  text-align:right;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:flex-end;
+}
+.or-qty{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.qbtn.sm{
+  width:30px; height:30px;
+  border-radius:11px;
+}
+.qty.sm{ min-width:18px; }
 
-  msg += `%0ATotal: ${money(total)} OMR`;
+.summary{
+  border-top:1px solid var(--line);
+  padding-top:10px;
+}
+.row{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+}
 
-  const notes = notesInput.value.trim();
-  if (notes) {
-    msg += `%0A%0ANotes: ${encodeURIComponent(notes)}`;
-  }
-
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-  window.open(url, "_blank", "noopener");
-});
-
-// Init
-renderMenu();
-renderOrder();
+.notes{ margin-top:10px; }
+textarea{
+  width:100%;
+  margin-top:6px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.18);
+  color: var(--text);
+  outline:none;
+  resize:vertical;
+}
+textarea::placeholder{ color: rgba(246,239,255,.45); }
