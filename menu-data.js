@@ -19,7 +19,7 @@ const MENU = {
     {
       title: "Pasta",
       items: [
-        { name: "Alfredo Pasta", desc: "Creamy rich and silky smooth parmesan garlic sauce topnotch blast", price: "2", image: "images/Pasta.png" },
+        { name: "Signature Alfredo Pasta", desc: "Creamy rich and silky smooth parmesan garlic sauce topnotch blast", price: "2", image: "images/Pasta.png" },
       ],
     },
     {
