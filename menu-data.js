@@ -54,7 +54,7 @@ const MENU = {
         { name: "Protein Shake", desc: "High protein energy shake perfect for a healthy boost", price: "1" },
       ],
     }, */
-    {
+/*    {
       title: "Refreshers",
       items: [
         { name: "Blueberry fusion", desc: "Refreshing blueberry flavored cooler", price: "0.8" },
@@ -62,7 +62,7 @@ const MENU = {
         { name: "Mint Margarita", desc: "Chilled mint lemon margarita cooler", price: "0.8" },
         { name: "Fresh Lime", desc: "Classic fresh lime refreshment", price: "0.6" },
       ],
-    },
+    },*/
     {
       title: "Paratha",
       items: [
