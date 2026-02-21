@@ -54,7 +54,7 @@ function renderItem(sectionTitle, item) {
     <div class="item" data-key="${k}">
       ${item.image ? `
         <div class="thumb">
-          <img src="${item.image}" alt="${item.name}" decoding="async">
+          <img src="${item.image}" alt="${item.name}" loading="lazy">
         </div>
       ` : `<div></div>`}
 
