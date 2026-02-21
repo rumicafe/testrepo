@@ -19,7 +19,7 @@ const MENU = {
     {
       title: "Pasta",
       items: [
-        { name: "Signature Alfredo Pasta", desc: "Creamy rich and silky smooth parmesan garlic sauce topnotch blast", price: "2", image: "images/Pasta.png" },
+        { name: "Alfredo Pasta", desc: "Creamy rich and silky smooth parmesan garlic sauce topnotch blast", price: "2", image: "images/Pasta.png" },
       ],
     },
     {
@@ -39,15 +39,22 @@ const MENU = {
       ],
     },
     {
-      title: "Shakes",
+      title: "Fresh Juices",
       items: [
-       // { name: "Oreo Shake", desc: "Creamy Oreo milkshake blended to perfection", price: "1" },
-       // { name: "Chocolate Ice Cream Shake", desc: "Rich chocolate ice cream blended into a smooth milkshake", price: "1" },
-       // { name: "Avocado Shake", desc: "Smooth creamy avocado shake naturally refreshing with nuts and honey", price: "1" },
-       // { name: "Protein Shake", desc: "High protein energy shake perfect for a healthy boost", price: "1" },
+        { name: "Orange Juice", desc: "Freshly squeezed natural pulpy orange juice", price: "0.8" },
+//        { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.8" },
       ],
     },
-   /* {
+  /*  {
+      title: "Shakes",
+      items: [
+        { name: "Oreo Shake", desc: "Creamy Oreo milkshake blended to perfection", price: "1" },
+        { name: "Chocolate Ice Cream Shake", desc: "Rich chocolate ice cream blended into a smooth milkshake", price: "1" },
+        { name: "Avocado Shake", desc: "Smooth creamy avocado shake naturally refreshing with nuts and honey", price: "1" },
+        { name: "Protein Shake", desc: "High protein energy shake perfect for a healthy boost", price: "1" },
+      ],
+    }, */
+    {
       title: "Refreshers",
       items: [
         { name: "Blueberry fusion", desc: "Refreshing blueberry flavored cooler", price: "0.8" },
@@ -55,7 +62,7 @@ const MENU = {
         { name: "Mint Margarita", desc: "Chilled mint lemon margarita cooler", price: "0.8" },
         { name: "Fresh Lime", desc: "Classic fresh lime refreshment", price: "0.6" },
       ],
-    }, */
+    },
     {
       title: "Paratha",
       items: [
@@ -65,15 +72,6 @@ const MENU = {
         { name: "Honey Cheese Paratha", desc: "Sweet paratha filled with honey and melted cheese", price: "0.5" },
       ],
     },
-
-    {
-      title: "Fresh Juices",
-      items: [
-        { name: "Orange Juice", desc: "Freshly squeezed natural pulpy orange juice", price: "0.8" , image: "images/orangejuice.png" },
-     //   { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.8" },
-      ],
-    },
-    
     {
       title: "Dessert",
       items: [
@@ -82,10 +80,3 @@ const MENU = {
     },
   ],
 };
-{
-      title: "Sides",
-      items: [
-        { name: "Karak", desc: "Authentic strong karak tea brewed with spices", price: "0.2" , image: "images/karak.png" },
-     //   { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.200" },
-      ],
-    },
