@@ -39,16 +39,9 @@ const MENU = {
       ],
     },
     {
-      title: "Fresh Juices",
-      items: [
-        { name: "Orange Juice", desc: "Freshly squeezed natural pulpy orange juice", price: "0.8" , image: "images/orangejuice.png" },
-     //   { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.8" },
-      ],
-    },
-    {
       title: "Shakes",
       items: [
-        { name: "Oreo Shake", desc: "Creamy Oreo milkshake blended to perfection", price: "1" },
+       // { name: "Oreo Shake", desc: "Creamy Oreo milkshake blended to perfection", price: "1" },
        // { name: "Chocolate Ice Cream Shake", desc: "Rich chocolate ice cream blended into a smooth milkshake", price: "1" },
        // { name: "Avocado Shake", desc: "Smooth creamy avocado shake naturally refreshing with nuts and honey", price: "1" },
        // { name: "Protein Shake", desc: "High protein energy shake perfect for a healthy boost", price: "1" },
@@ -72,6 +65,15 @@ const MENU = {
         { name: "Honey Cheese Paratha", desc: "Sweet paratha filled with honey and melted cheese", price: "0.5" },
       ],
     },
+
+    {
+      title: "Fresh Juices",
+      items: [
+        { name: "Orange Juice", desc: "Freshly squeezed natural pulpy orange juice", price: "0.8" , image: "images/orangejuice.png" },
+     //   { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.8" },
+      ],
+    },
+    
     {
       title: "Dessert",
       items: [
@@ -80,3 +82,10 @@ const MENU = {
     },
   ],
 };
+{
+      title: "Sides",
+      items: [
+        { name: "Karak", desc: "Authentic strong karak tea brewed with spices", price: "0.2" , image: "images/karak.png" },
+     //   { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.200" },
+      ],
+    },
