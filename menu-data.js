@@ -41,7 +41,7 @@ const MENU = {
     {
       title: "Fresh Juices",
       items: [
-        { name: "Orange Juice", desc: "Freshly squeezed natural pulpy orange juice", price: "0.8" },
+        { name: "Orange Juice", desc: "Freshly squeezed natural pulpy orange juice", price: "0.8" , image: "images/orangejuice.png" },
      //   { name: "Mr Mango", desc: "Thick and refreshing mango juice", price: "0.8" },
       ],
     },
