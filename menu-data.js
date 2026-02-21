@@ -11,9 +11,9 @@ const MENU = {
     {
       title: "Chicken Burgers",
       items: [
-        { name: "Grilled Pro", desc: "Tender grilled chicken fillet seasoned with café spices topped with cheese iceberg tomatos onions and pickles", price: "1.6", image: "images/burger.png" },
-        { name: "Smoked Mushroom", desc: "Grilled chicken fillet with yellow cheese and rich Italian mushroom sauce in a toss bun", price: "1.8", image: "images/burger.png" },
-        { name: "Crispy Zinger", desc: "Crispy fried chicken fillet juicy & crunchy herbs topped with cheese and our signature sauce", price: "1.4", image: "images/burger.png" },
+        { name: "Grilled Pro", desc: "Tender grilled chicken fillet seasoned with café spices topped with cheese iceberg tomatos onions and pickles", price: "1.6", image: "images/grilledpro.png" },
+        { name: "Smoked Mushroom", desc: "Grilled chicken fillet with yellow cheese and rich Italian mushroom sauce in a toss bun", price: "1.8", image: "images/smokedmashroom.png" },
+        { name: "Crispy Zinger", desc: "Crispy fried chicken fillet juicy & crunchy herbs topped with cheese and our signature sauce", price: "1.4", image: "images/crispyzinger.png" },
       ],
     },
     {
