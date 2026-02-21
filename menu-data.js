@@ -3,9 +3,9 @@ const MENU = {
     {
       title: "Beef Burgers",
       items: [
-        { name: "Rumi Classic", desc: "Juicy single smashed beef patty in a toasted royal bun topped on melted cheese in house signature sauce and pickles", price: "1.8", image: "images/burger.png" },
-        { name: "Bull Mushroom", desc: "Double beef patties layered with caramelized onions two cheese slice with signature Rumi mushroom sauce", price: "2.2", image: "images/burger.png" },
-        { name: "Last Dance", desc: "Triple smashed beef patties steaked combination with melted cheese pickles our very own sauce in a toasted country bun", price: "2.6", image: "images/burger.png" },
+        { name: "Rumi Classic", desc: "Juicy single smashed beef patty in a toasted royal bun topped on melted cheese in house signature sauce and pickles", price: "1.8", image: "images/rumiclassic.png" },
+        { name: "Bull Mushroom", desc: "Double beef patties layered with caramelized onions two cheese slice with signature Rumi mushroom sauce", price: "2.2", image: "images/bullmashroom.png" },
+        { name: "Last Dance", desc: "Triple smashed beef patties steaked combination with melted cheese pickles our very own sauce in a toasted country bun", price: "2.6", image: "images/lastdance.png" },
       ],
     },
     {
